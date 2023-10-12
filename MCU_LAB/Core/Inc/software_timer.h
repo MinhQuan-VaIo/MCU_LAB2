@@ -1,8 +1,8 @@
 /*
  * software_timer.h
  *
- *  Created on: Sep 24, 2022
- *      Author: KAI
+ *  Created on: Oct 12, 2023
+ *      Author: Minhq
  */
 
 #ifndef INC_SOFTWARE_TIMER_H_
