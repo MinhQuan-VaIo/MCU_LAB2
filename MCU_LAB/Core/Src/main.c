@@ -58,6 +58,10 @@ static void MX_TIM2_Init(void);
 /* USER CODE BEGIN 0 */
 void display(int val){
 	switch (val){
+		case 0:
+			HAL_GPIO_WritePin(GPIOB, SEG1_Pin | SEG2_Pin |SEG0_Pin | SEG3_Pin | SEG4_Pin | SEG5_Pin, RESET);
+			HAL_GPIO_WritePin(GPIOB, SEG6_Pin , SET);
+			break;
 		case 1:
 			HAL_GPIO_WritePin(GPIOB, SEG1_Pin | SEG2_Pin , RESET);
 			HAL_GPIO_WritePin(GPIOB, SEG0_Pin | SEG3_Pin | SEG4_Pin | SEG5_Pin| SEG6_Pin , SET);
@@ -65,6 +69,10 @@ void display(int val){
 		case 2:
 			HAL_GPIO_WritePin(GPIOB, SEG0_Pin | SEG1_Pin | SEG3_Pin | SEG4_Pin | SEG6_Pin , RESET);
 			HAL_GPIO_WritePin(GPIOB, SEG2_Pin | SEG5_Pin , SET);
+			break;
+		case 3:
+			HAL_GPIO_WritePin(GPIOB, SEG1_Pin | SEG2_Pin |SEG0_Pin | SEG3_Pin | SEG6_Pin, RESET);
+			HAL_GPIO_WritePin(GPIOB, SEG4_Pin | SEG5_Pin , SET);
 			break;
 	}
 }
@@ -209,14 +217,17 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LED_RED_Pin|EN0_Pin|EN1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, DOT_Pin|LED_RED_Pin|EN0_Pin|EN1_Pin
+                          |EN2_Pin|EN3_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, SEG0_Pin|SEG1_Pin|SEG2_Pin|SEG3_Pin
                           |SEG4_Pin|SEG5_Pin|SEG6_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : LED_RED_Pin EN0_Pin EN1_Pin */
-  GPIO_InitStruct.Pin = LED_RED_Pin|EN0_Pin|EN1_Pin;
+  /*Configure GPIO pins : DOT_Pin LED_RED_Pin EN0_Pin EN1_Pin
+                           EN2_Pin EN3_Pin */
+  GPIO_InitStruct.Pin = DOT_Pin|LED_RED_Pin|EN0_Pin|EN1_Pin
+                          |EN2_Pin|EN3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -234,32 +245,50 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-int counter = 50;
+int counter1 = 50;
+int counter2 = 100;
 int status = 1;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	if(counter > 0){
-		counter--;
-		if(counter <= 0){
+	if(counter1 > 0){
+		counter1--;
+		if(counter1 <= 0){
 			switch(status){
 			case 1:
 				status = 2;
 				HAL_GPIO_WritePin(GPIOA, EN0_Pin, RESET);
-				HAL_GPIO_WritePin(GPIOA, EN1_Pin, SET);
+				HAL_GPIO_WritePin(GPIOA, EN1_Pin|EN2_Pin|EN3_Pin, SET);
 				display(1);
 				break;
 			case 2:
-				status = 1;
+				status = 3;
 				HAL_GPIO_WritePin(GPIOA, EN1_Pin, RESET);
-				HAL_GPIO_WritePin(GPIOA, EN0_Pin, SET);
+				HAL_GPIO_WritePin(GPIOA, EN2_Pin |EN3_Pin|EN0_Pin, SET);
 				display(2);
 				break;
+			case 3:
+				status = 4;
+				HAL_GPIO_WritePin(GPIOA, EN2_Pin, RESET);
+				HAL_GPIO_WritePin(GPIOA, EN0_Pin|EN1_Pin|EN3_Pin, SET);
+				display(3);
+				break;
+			case 4:
+				status = 1;
+				HAL_GPIO_WritePin(GPIOA, EN3_Pin, RESET);
+				HAL_GPIO_WritePin(GPIOA, EN0_Pin|EN1_Pin|EN2_Pin, SET);
+				display(0);
+				break;
 			}
-			HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin);
-			counter = 100;
+			counter1 = 50;
 		}
 	}
-
-	timerRun();
+	if(counter2 > 0){
+		counter2--;
+		if(counter2 <= 0){
+			HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
+			HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin);
+			counter2 = 100;
+		}
+	}
 }
 /* USER CODE END 4 */
 
