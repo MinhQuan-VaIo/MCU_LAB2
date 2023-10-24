@@ -590,7 +590,7 @@ static void MX_GPIO_Init(void)
  800043c:	40010c00 	.word	0x40010c00
 
 08000440 <update7SEG>:
-int counter1 = 50;
+int counter1 = 25;
 int counter2 = 100;
 const int MAX_LED = 4;
 int index_led = 0;
@@ -737,9 +737,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
  800053c:	600a      	str	r2, [r1, #0]
  800053e:	4618      	mov	r0, r3
  8000540:	f7ff ff7e 	bl	8000440 <update7SEG>
-			counter1 = 50;
+			counter1 = 25;
  8000544:	4b0f      	ldr	r3, [pc, #60]	; (8000584 <HAL_TIM_PeriodElapsedCallback+0x80>)
- 8000546:	2232      	movs	r2, #50	; 0x32
+ 8000546:	2219      	movs	r2, #25
  8000548:	601a      	str	r2, [r3, #0]
 			}
 		}
