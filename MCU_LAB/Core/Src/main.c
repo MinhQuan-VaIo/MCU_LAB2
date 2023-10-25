@@ -189,10 +189,12 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   setTimer1(10);
   setTimer2(10);
+  setTimer3(10);
   while (1)
   {
     /* USER CODE END WHILE */
 	  if (timer1_flag == 1){
+		  	  // Switching 4 LEDs 7 SEG quarter of second
 		  setTimer1(25);
 		  if (index_led >= 4) index_led = 0;
 		  update7SEG(index_led++);
@@ -213,6 +215,10 @@ int main(void)
 			  hour = 0;
 		  }
 		  updateClockBuffer();
+	 }
+	  if(timer3_flag == 1){
+		  	  // Toggle LED
+		  setTimer3(100);
 		  HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin| DOT_Pin);
 	 }
     /* USER CODE BEGIN 3 */
