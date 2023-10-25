@@ -149,8 +149,6 @@ void updateClockBuffer(){
 			led_buffer[2] = minute / 10;
 			led_buffer[3] = minute % 10;
 		}
-		if (index_led >= 4) index_led = 0;
-		update7SEG(index_led++);
 }
 /* USER CODE END 0 */
 
@@ -189,13 +187,19 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  setTimer1(1);
+  setTimer1(10);
+  setTimer2(10);
   while (1)
   {
     /* USER CODE END WHILE */
-	  if (timer1_flag == 1) {
+	  if (timer1_flag == 1){
+		  setTimer1(25);
+		  if (index_led >= 4) index_led = 0;
+		  update7SEG(index_led++);
+	  }
+	  if (timer2_flag == 1) {
 	 		  // UPDATE CLOCK BUFFER
-		  setTimer1(100);
+		  setTimer2(100);
 		  second++;
 		  if (second >= 60){
 			  second = 0;
