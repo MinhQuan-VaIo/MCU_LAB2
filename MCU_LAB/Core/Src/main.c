@@ -230,11 +230,11 @@ int main(void)
 	  		  GPIOA->ODR = ~0x8000 >> i;
 	  		  GPIOB->ODR = matrix_buffer[i];
 	  	  }
-//	  if (timer2_flag == 1) {
-//	  		  // Scroll 'A' in the left direction
-//	  		  setTimer2(100);
-//	  		  shift_left(matrix_buffer);
-//	  	  }
+	  if (timer2_flag == 1) {
+	  		  // Scroll 'A' in the left direction
+	  		  setTimer2(100);
+	  		  shift_left(matrix_buffer);
+	  	  }
     /* USER CODE BEGIN 3 */
 	 	  }
   /* USER CODE END 3 */
