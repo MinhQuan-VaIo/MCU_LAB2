@@ -255,11 +255,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 				break;
 			}
 			HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin);
-			counter = 100;
+			counter = 50;
 		}
 	}
-
-	timerRun();
 }
 /* USER CODE END 4 */
 
