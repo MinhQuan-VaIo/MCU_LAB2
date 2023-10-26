@@ -213,6 +213,7 @@ int main(void)
 			  hour = 0;
 		  }
 		  updateClockBuffer();
+		  //Blinking LED
 		  HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin| DOT_Pin);
 	 }
     /* USER CODE BEGIN 3 */
